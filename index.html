@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="redlineApp">
   <head>
     <title>Angularjs Table App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +12,10 @@
       <script src="../../assets/js/respond.min.js"></script>
     <![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="scripts/angular-route.min.js"></script>
   </head>
   <body>
-  <div class="container" data-ng-init="redlines=[{id:1,user:'Mark',plan:'1-20'}, {id:2,user:'Tony',plan:'2-40'}, {id:3,user:'Jen',plan:'9-30'}]">
+  <div class="container" ng-controller="redlinesController">
     <h1>Angularjs Table</h1>
     <div class="table-responsive">
                     	<ul class="pagination pagination-sm">
@@ -33,7 +34,7 @@
                                 </tr>
                                 <tr>
                                 	<td>
-                                    	<input class="form-control input-sm" type="search">
+                                    	<input ng-model="id" class="form-control input-sm" type="search">
                                     </td>
                                     <td>
                                     	<input class="form-control input-sm" type="search">
@@ -44,7 +45,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            	<tr ng-repeat="redline in redlines">
+                            	<tr ng-repeat="redline in redlines | filter:id | orderBy:'user'">
                                 	<td>{{redline.id}}</td>
                                     <td>{{redline.user}}</td>
                                     <td>{{redline.plan}}</td>
@@ -65,6 +66,32 @@
     <script src="//code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script>
+		var redlineApp = angular.module('redlineApp', ['ngRoute']);
+		
+		redlineApp.config(function($routeProvider) {
+			$routeProvider
+				.when('/',
+					{
+						controller: 'redlinesController',
+						templateUrl: 'index.html'
+					})
+				.when('/pending',
+					{
+						controller: 'redlinesController',
+						templateUrl: 'pending.html'
+					})
+				.otherwise({ redirectTo: '/'});
+		});
+		
+		redlineApp.controller('redlinesController', function($scope) {
+			$scope.redlines = [
+				{id:1,user:'Mark',plan:'1-20'}, 
+				{id:2,user:'Tony',plan:'2-40'}, 
+				{id:3,user:'Jen',plan:'9-30'}
+			];
+		});
+	</script>
   </body>
 </html>
 
