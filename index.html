@@ -13,48 +13,22 @@
     	<![endif]-->
     	<script src="http://code.angularjs.org/1.2.0-rc.3/angular.min.js"></script>
     	<script src="http://code.angularjs.org/1.2.0-rc.3/angular-route.min.js"></script>
+        <script src="scripts/redlines.js"></script>
     </head>
 <body>
 	<!-- views placeholder -->
     <div data-ng-view>
     </div>
-    <a href="/AngularJSTable/#create">Create new redline</a>
-    <a href="/AngularJSTable/#">In Progress</a>
+    <div class="container">
+    	<a href="/AngularJSTable/#create">Create new redline</a> | 
+    	<a href="/AngularJSTable/#">In Progress</a>
+    </div>
     <!-- /views -->
     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="//code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script>
-		var redlineApp = angular.module('redlineApp', ['ngRoute']);
-		
-		redlineApp.config(function($routeProvider) {
-			$routeProvider
-				.when('/',
-					{
-						controller: 'redlinesController',
-						templateUrl: 'partials/inProgress.html'
-					})
-				.when('/create',
-					{
-						controller: 'redlinesController',
-						templateUrl: 'partials/create.html'
-					})
-				.otherwise({ redirectTo: '/'});
-			});
-		
-		var controllers = {};
-		controllers.redlinesController = function ($scope) {
-			$scope.redlines = [
-				{id:1,user:'Mark',plan:'1-20'}, 
-				{id:2,user:'Tony',plan:'2-40'}, 
-				{id:3,user:'Jen',plan:'9-30'}
-			];
-		};
-		
-		redlineApp.controller(controllers);
-    </script>
 </body>
 </html>
 
